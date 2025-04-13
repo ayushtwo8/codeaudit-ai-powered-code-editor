@@ -1,17 +1,18 @@
-import express from 'express'
+import express from 'express';
 import dotenv from 'dotenv'
+import cors from 'cors'
+
 dotenv.config();
+
+import aiRouter from './routes/aiRoute.js';
 
 const app = express();
 
-app.get('/', (req, res) =>{
-    res.send("Express");
-})
+app.use(cors());
+app.use(express.json());
 
-async function main(){
-    app.listen(process.env.PORT, () =>{
-        console.log(`Server is running on ${process.env.PORT}`);
-    })
-}
+app.use('/api/v1/ai', aiRouter);
 
-main();
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
